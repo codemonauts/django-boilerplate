@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  db:
+    image: codemonauts/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: topsecret
+      MYSQL_DATABASE: django
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
+    volumes:
+      - .:/data:ro,delegated
+      - db-data:/var/lib/mysql:delegated
+
+  web:
+    build: .
+    command: /bin/sh -c 'wait && ./manage.py runserver 0.0.0.0:8000'
+    restart: always
+    volumes:
+      - .:/code:delegated
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: mynewproject.settings.common
+      WAIT_HOSTS: db:3306
+    depends_on:
+      - db
+
+  gulp:
+    image: "node:12"
+    user: "node"
+    working_dir: /code
+    volumes:
+      - .:/code:delegated
+    entrypoint: /bin/bash -c 'yarn install && ./node_modules/.bin/gulp'
+
+volumes:
+  db-data:
