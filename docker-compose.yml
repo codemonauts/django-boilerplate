@@ -23,7 +23,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DJANGO_SETTINGS_MODULE: mynewproject.settings.common
+      DJANGO_SETTINGS_MODULE: project_name.settings.common
       WAIT_HOSTS: db:3306
     depends_on:
       - db

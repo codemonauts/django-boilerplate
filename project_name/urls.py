@@ -1,4 +1,4 @@
-"""mynewproject URL Configuration
+"""project_name URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('healthz', include("mynewproject.healthz.urls")),
-    path("", include("mynewproject.core.urls")),
+    path('healthz', include("project_name.healthz.urls")),
+    path("", include("project_name.core.urls")),
 ]
